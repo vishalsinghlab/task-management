@@ -7,6 +7,7 @@ const {
   getTasks,
   updateTask,
   deleteTask,
+  assignTask,
 } = require("../controllers/task.controller");
 
 const {
@@ -30,5 +31,8 @@ router.patch("/:id", updateTaskValidation, updateTask);
 
 // Delete task
 router.delete("/:id", deleteTask);
+
+// Assign task
+router.patch("/:id/assign", assignTask);
 
 module.exports = router;

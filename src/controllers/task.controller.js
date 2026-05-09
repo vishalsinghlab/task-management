@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 
 const Task = require("../models/task.model");
+const User = require("../models/user.model");
 
 // CREATE TASK
 const createTask = async (req, res, next) => {
@@ -18,8 +19,25 @@ const createTask = async (req, res, next) => {
 
     let assignee = req.user._id;
 
-    // Manager or Team Lead can assign
-    if (["MANAGER", "TEAM_LEAD"].includes(req.user.role) && assignedTo) {
+    // Manager can assign to anyone
+    if (req.user.role === "MANAGER" && assignedTo) {
+      assignee = assignedTo;
+    }
+
+    // Team Lead can assign only to team members
+    if (req.user.role === "TEAM_LEAD" && assignedTo) {
+      const teamMember = await User.findOne({
+        _id: assignedTo,
+        teamLead: req.user._id,
+      });
+
+      if (!teamMember) {
+        return res.status(403).json({
+          success: false,
+          message: "Can only assign to team members",
+        });
+      }
+
       assignee = assignedTo;
     }
 
@@ -51,14 +69,26 @@ const getTasks = async (req, res, next) => {
       filter = {};
     }
 
-    // Team Lead sees assigned + created
+    // Team Lead sees:
+    // - own tasks
+    // - team member tasks
     else if (req.user.role === "TEAM_LEAD") {
+      const teamMembers = await User.find({
+        teamLead: req.user._id,
+      }).select("_id");
+
+      const memberIds = teamMembers.map((user) => user._id);
+
       filter = {
-        $or: [{ assignedTo: req.user._id }, { createdBy: req.user._id }],
+        $or: [
+          { assignedTo: req.user._id },
+          { assignedTo: { $in: memberIds } },
+          { createdBy: req.user._id },
+        ],
       };
     }
 
-    // Employee sees own tasks only
+    // Employee
     else {
       filter = {
         assignedTo: req.user._id,
@@ -166,9 +196,106 @@ const deleteTask = async (req, res, next) => {
   }
 };
 
+// ASSIGN TASK
+const assignTask = async (req, res, next) => {
+  try {
+    const { assignedTo } = req.body;
+
+    // Validate assignedTo
+    if (!assignedTo) {
+      return res.status(400).json({
+        success: false,
+        message: "assignedTo is required",
+      });
+    }
+
+    // Find task
+    const task = await Task.findById(req.params.id);
+
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
+
+    // EMPLOYEE cannot assign
+    if (req.user.role === "EMPLOYEE") {
+      return res.status(403).json({
+        success: false,
+        message: "Employees cannot assign tasks",
+      });
+    }
+
+    // MANAGER can assign to anyone
+    if (req.user.role === "MANAGER") {
+      const userExists = await User.findById(assignedTo);
+
+      if (!userExists) {
+        return res.status(404).json({
+          success: false,
+          message: "Assigned user not found",
+        });
+      }
+
+      task.assignedTo = assignedTo;
+
+      await task.save();
+
+      return res.status(200).json({
+        success: true,
+        message: "Task assigned successfully",
+        task,
+      });
+    }
+
+    // TEAM LEAD logic
+    if (req.user.role === "TEAM_LEAD") {
+      // Allow self assignment
+      if (assignedTo === req.user._id.toString()) {
+        task.assignedTo = assignedTo;
+
+        await task.save();
+
+        return res.status(200).json({
+          success: true,
+          message: "Task assigned successfully",
+          task,
+        });
+      }
+
+      // Check if user is team member
+      const teamMember = await User.findOne({
+        _id: assignedTo,
+        teamLead: req.user._id,
+      });
+
+      if (!teamMember) {
+        return res.status(403).json({
+          success: false,
+          message: "Can only assign tasks to team members",
+        });
+      }
+
+      task.assignedTo = assignedTo;
+
+      await task.save();
+
+      return res.status(200).json({
+        success: true,
+        message: "Task assigned successfully",
+        task,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createTask,
   getTasks,
   updateTask,
   deleteTask,
+  assignTask,
 };
