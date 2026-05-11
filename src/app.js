@@ -6,6 +6,7 @@ const authRoutes = require("./routes/auth.routes");
 const testRoutes = require("./routes/test.routes");
 const taskRoutes = require("./routes/task.routes");
 const userRoutes = require("./routes/user.routes");
+const swaggerDocs = require("./config/swagger");
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/test", testRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/users", userRoutes);
+
+swaggerDocs(app);
 
 // Health Route
 app.get("/", (req, res) => {
