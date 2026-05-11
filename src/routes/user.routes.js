@@ -6,6 +6,7 @@ const authorize = require("../middlewares/role.middleware");
 const {
   getAllUsers,
   getTeamMembers,
+  assignTeamLead,
 } = require("../controllers/user.controller");
 
 const router = express.Router();
