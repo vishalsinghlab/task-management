@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 
 const Task = require("../models/task.model");
 const User = require("../models/user.model");
+const { getIO } = require("../config/socket.js");
 
 // CREATE TASK
 const createTask = async (req, res, next) => {
@@ -48,6 +49,9 @@ const createTask = async (req, res, next) => {
       createdBy: req.user._id,
       assignedTo: assignee,
     });
+    const io = getIO();
+
+    io.emit("taskCreated", task);
 
     res.status(201).json({
       success: true,
@@ -150,12 +154,15 @@ const updateTask = async (req, res, next) => {
     // Update task
     Object.assign(task, req.body);
 
-    await task.save();
+    const updatedTask = await task.save();
+    const io = getIO();
+
+    io.emit("taskUpdated", updatedTask);
 
     res.status(200).json({
       success: true,
       message: "Task updated successfully",
-      task,
+      task: updatedTask,
     });
   } catch (error) {
     next(error);
@@ -186,6 +193,9 @@ const deleteTask = async (req, res, next) => {
     }
 
     await task.deleteOne();
+    const io = getIO();
+
+    io.emit("taskDeleted", task._id);
 
     res.status(200).json({
       success: true,

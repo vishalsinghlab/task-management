@@ -10,7 +10,12 @@ const userRoutes = require("./routes/user.routes");
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  }),
+);
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
