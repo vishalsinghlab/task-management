@@ -15,6 +15,9 @@ const options = {
       {
         url: "http://localhost:5000",
       },
+      {
+        url: "https://task-management-1l3m.onrender.com",
+      },
     ],
 
     components: {

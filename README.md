@@ -143,6 +143,7 @@ http://localhost:4200
 Swagger API documentation is available at:
 
 ```txt
+https://task-management-1l3m.onrender.com/api-docs
 http://localhost:5000/api-docs
 ```
 
