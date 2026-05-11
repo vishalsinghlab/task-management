@@ -85,4 +85,11 @@ router.get("/", protect, authorize("MANAGER"), getAllUsers);
  */
 router.get("/team", protect, authorize("TEAM_LEAD"), getTeamMembers);
 
+router.patch(
+  "/:id/assign-team-lead",
+  protect,
+  authorize("MANAGER"),
+  assignTeamLead,
+);
+
 module.exports = router;
