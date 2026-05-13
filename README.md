@@ -1,42 +1,98 @@
-````md
-# Task Management Application
+---
 
-A role-based task management application built using the MEAN stack (MongoDB, Express.js, Angular, Node.js) with JWT authentication, role-based authorization, realtime updates, and Swagger API documentation.
+# TaskFlow HQ Backend
+
+Backend API for the **TaskFlow HQ** Task Management System built using **Node.js, Express.js, MongoDB, JWT Authentication, Socket.IO, and Swagger OpenAPI**.
+
+Supports:
+
+* Role-Based Access Control (RBAC)
+* Realtime task updates
+* Team management
+* Task assignment workflows
+* REST APIs for frontend & external integrations
 
 ---
 
 # Features
 
-## Authentication
+## Authentication & Authorization
 
-- User Registration
-- User Login
-- JWT Authentication
-- Protected Routes
+* JWT Authentication
+* Secure Password Hashing using bcryptjs
+* Protected API Routes
+* Role-Based Access Control (RBAC)
 
-## Role-Based Authorization
+### Supported Roles
 
-- Manager
-- Team Lead
-- Employee
+| Role      | Permissions        |
+| --------- | ------------------ |
+| Manager   | Full system access |
+| Team Lead | Manage team tasks  |
+| Employee  | Manage own tasks   |
 
-## Task Management
+---
 
-- Create Tasks
-- Update Tasks
-- Delete Tasks
-- Assign Tasks
-- Filter Tasks by Status
+# Task Management Features
 
-## Realtime Updates
+* Create Tasks
+* Update Tasks
+* Delete Tasks
+* Assign Tasks
+* Task Status Updates
+* Task Filtering
+* Team-based task visibility
 
-- Socket.IO integration for live task updates
+---
 
-## API Documentation
+# Team Management
 
-- Swagger OpenAPI Documentation
-- JWT Authorization Support
-- API Testing via Swagger UI
+Managers can:
+
+* View all users
+* Assign employees to team leads
+* Manage organization-wide tasks
+
+Team Leads can:
+
+* View their team members
+* Assign tasks to their team
+
+---
+
+# Real-Time Updates
+
+Integrated using Socket.IO:
+
+* Live task creation updates
+* Live task update synchronization
+* Live task deletion updates
+* Instant dashboard refresh
+
+---
+
+# API Documentation
+
+Swagger OpenAPI Documentation included.
+
+Features:
+
+* Interactive API testing
+* JWT authorization support
+* Request/response schemas
+* Organized API groups
+
+Swagger URL:
+
+```txt
+https://task-management-1l3m.onrender.com/api-docs
+```
+
+Local:
+
+```txt
+http://localhost:5000/api-docs
+```
 
 ---
 
@@ -44,65 +100,83 @@ A role-based task management application built using the MEAN stack (MongoDB, Ex
 
 ## Backend
 
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- JWT
-- bcryptjs
-- Socket.IO
-- Swagger (OpenAPI Documentation)
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JWT Authentication
+* bcryptjs
+* Socket.IO
+* Swagger OpenAPI
 
 ## Frontend
 
-- Angular
-- RxJS
-- Angular Reactive Forms
-- Tailwind CSS
+* Angular 19
+* Tailwind CSS
+* RxJS
+* ngx-toastr
 
 ---
 
 # Project Structure
 
-```txt
-backend/
-frontend/
+```bash
+src/
+├── config/
+├── controllers/
+├── middlewares/
+├── models/
+├── routes/
+├── sockets/
+├── utils/
+├── docs/
+├── app.js
+└── server.js
 ```
 
 ---
 
-# Backend Setup
+# Environment Variables
 
-## 1. Navigate to Backend
+Create a `.env` file:
 
-```bash
-cd backend
+```env
+PORT=5000
+
+MONGO_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_secret_key
+
+CLIENT_URL=http://localhost:4200
 ```
 
-## 2. Install Dependencies
+---
+
+# Installation
+
+## Clone Repository
+
+```bash
+git clone <backend-repo-url>
+```
+
+---
+
+## Install Dependencies
 
 ```bash
 npm install
 ```
 
-## 3. Create Environment File
+---
 
-Create a `.env` file inside `backend/`
-
-```env
-PORT=5000
-MONGO_URI=your_mongodb_connection
-JWT_SECRET=your_jwt_secret
-CLIENT_URL=http://localhost:4200
-```
-
-## 4. Run Backend Server
+## Run Development Server
 
 ```bash
 npm run dev
 ```
 
-Backend will run on:
+Backend runs on:
 
 ```txt
 http://localhost:5000
@@ -110,137 +184,106 @@ http://localhost:5000
 
 ---
 
-# Frontend Setup
-
-## 1. Navigate to Frontend
-
-```bash
-cd frontend
-```
-
-## 2. Install Dependencies
-
-```bash
-npm install
-```
-
-## 3. Run Angular App
-
-```bash
-ng serve
-```
-
-Frontend will run on:
-
-```txt
-http://localhost:4200
-```
-
----
-
-# API Documentation
-
-Swagger API documentation is available at:
-
-```txt
-https://task-management-1l3m.onrender.com/api-docs
-http://localhost:5000/api-docs
-```
-
-## Swagger Features
-
-- Authentication APIs
-- User APIs
-- Task APIs
-- Request/Response Schemas
-- JWT Authorization Support
-
-## Swagger Setup
-
-Install dependencies:
-
-```bash
-npm install swagger-jsdoc swagger-ui-express
-```
-
----
-
-# User Roles
-
-## Manager
-
-- View all users
-- Create tasks
-- Assign tasks to anyone
-- Manage all tasks
-
-## Team Lead
-
-- View team members
-- Assign tasks to team members
-- Manage team tasks
-
-## Employee
-
-- View assigned tasks
-- Update own tasks
-- Delete own tasks
-
----
-
-# Realtime Events
-
-Socket.IO events used:
-
-```txt
-taskCreated
-taskUpdated
-taskDeleted
-```
-
----
+# API Endpoints
 
 # Authentication
 
-JWT token must be sent in headers:
+| Method | Endpoint           | Description   |
+| ------ | ------------------ | ------------- |
+| POST   | /api/auth/register | Register user |
+| POST   | /api/auth/login    | Login user    |
+
+---
+
+# Tasks
+
+| Method | Endpoint              | Description |
+| ------ | --------------------- | ----------- |
+| GET    | /api/tasks            | Get tasks   |
+| POST   | /api/tasks            | Create task |
+| PATCH  | /api/tasks/:id        | Update task |
+| DELETE | /api/tasks/:id        | Delete task |
+| PATCH  | /api/tasks/:id/assign | Assign task |
+
+---
+
+# Users
+
+| Method | Endpoint                        | Description             |
+| ------ | ------------------------------- | ----------------------- |
+| GET    | /api/users                      | Get all users           |
+| GET    | /api/users/team                 | Get team members        |
+| PATCH  | /api/users/:id/assign-team-lead | Assign employee to lead |
+
+---
+
+# Socket.IO Events
+
+| Event       | Description                  |
+| ----------- | ---------------------------- |
+| taskCreated | Fired when a task is created |
+| taskUpdated | Fired when a task is updated |
+| taskDeleted | Fired when a task is deleted |
+
+---
+
+# Authentication Header
+
+Protected routes require:
 
 ```txt
-Authorization: Bearer your_token
+Authorization: Bearer your_jwt_token
 ```
 
 ---
 
 # Available Scripts
 
-## Backend
+## Development
 
 ```bash
 npm run dev
-npm start
 ```
 
-## Frontend
+## Production
 
 ```bash
-ng serve
-ng build
+npm start
 ```
 
 ---
 
 # Future Improvements
 
-- Pagination
-- Search & Sorting
-- File Attachments
-- Notifications
-- Task Comments
-- Docker Deployment
-- Unit Testing
+* Pagination
+* Search & Sorting
+* Activity Logs
+* Notifications
+* File Attachments
+* Docker Support
+* Unit Testing
+* Audit Trails
+* Rate Limiting
+* API Versioning
+
+---
+
+# Deployment
+
+## Backend
+
+Recommended: Render
+
+## Database
+
+MongoDB Atlas
 
 ---
 
 # Author
 
 Vishal Singh
-````
+
+* GitHub: [vishalsinghlab](https://github.com/vishalsinghlab?utm_source=chatgpt.com)
+* LinkedIn: [Vishal Singh LinkedIn](https://linkedin.com/in/vishal-singh-b57b7b109?utm_source=chatgpt.com)
+* Portfolio: [Portfolio Website](https://singhvishal.vercel.app?utm_source=chatgpt.com)
