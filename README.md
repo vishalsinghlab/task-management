@@ -1,16 +1,14 @@
----
-
 # TaskFlow HQ Backend
 
 Backend API for the **TaskFlow HQ** Task Management System built using **Node.js, Express.js, MongoDB, JWT Authentication, Socket.IO, and Swagger OpenAPI**.
 
 Supports:
 
-* Role-Based Access Control (RBAC)
-* Realtime task updates
-* Team management
-* Task assignment workflows
-* REST APIs for frontend & external integrations
+- Role-Based Access Control (RBAC)
+- Realtime task updates
+- Team management
+- Task assignment workflows
+- REST APIs for frontend & external integrations
 
 ---
 
@@ -18,30 +16,30 @@ Supports:
 
 ## Authentication & Authorization
 
-* JWT Authentication
-* Secure Password Hashing using bcryptjs
-* Protected API Routes
-* Role-Based Access Control (RBAC)
+- JWT Authentication
+- Secure Password Hashing using bcryptjs
+- Protected API Routes
+- Role-Based Access Control (RBAC)
 
 ### Supported Roles
 
-| Role      | Permissions        |
-| --------- | ------------------ |
-| Manager   | Full system access |
-| Team Lead | Manage team tasks  |
-| Employee  | Manage own tasks   |
+| Role | Permissions |
+|---|---|
+| Manager | Full system access |
+| Team Lead | Manage team tasks |
+| Employee | Manage own tasks |
 
 ---
 
 # Task Management Features
 
-* Create Tasks
-* Update Tasks
-* Delete Tasks
-* Assign Tasks
-* Task Status Updates
-* Task Filtering
-* Team-based task visibility
+- Create Tasks
+- Update Tasks
+- Delete Tasks
+- Assign Tasks
+- Task Status Updates
+- Task Filtering
+- Team-based task visibility
 
 ---
 
@@ -49,14 +47,14 @@ Supports:
 
 Managers can:
 
-* View all users
-* Assign employees to team leads
-* Manage organization-wide tasks
+- View all users
+- Assign employees to team leads
+- Manage organization-wide tasks
 
 Team Leads can:
 
-* View their team members
-* Assign tasks to their team
+- View their team members
+- Assign tasks to their team
 
 ---
 
@@ -64,10 +62,10 @@ Team Leads can:
 
 Integrated using Socket.IO:
 
-* Live task creation updates
-* Live task update synchronization
-* Live task deletion updates
-* Instant dashboard refresh
+- Live task creation updates
+- Live task update synchronization
+- Live task deletion updates
+- Instant dashboard refresh
 
 ---
 
@@ -77,10 +75,10 @@ Swagger OpenAPI Documentation included.
 
 Features:
 
-* Interactive API testing
-* JWT authorization support
-* Request/response schemas
-* Organized API groups
+- Interactive API testing
+- JWT authorization support
+- Request/response schemas
+- Organized API groups
 
 Swagger URL:
 
@@ -100,21 +98,21 @@ http://localhost:5000/api-docs
 
 ## Backend
 
-* Node.js
-* Express.js
-* MongoDB
-* Mongoose
-* JWT Authentication
-* bcryptjs
-* Socket.IO
-* Swagger OpenAPI
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- bcryptjs
+- Socket.IO
+- Swagger OpenAPI
 
 ## Frontend
 
-* Angular 19
-* Tailwind CSS
-* RxJS
-* ngx-toastr
+- Angular 19
+- Tailwind CSS
+- RxJS
+- ngx-toastr
 
 ---
 
@@ -188,39 +186,39 @@ http://localhost:5000
 
 # Authentication
 
-| Method | Endpoint           | Description   |
-| ------ | ------------------ | ------------- |
-| POST   | /api/auth/register | Register user |
-| POST   | /api/auth/login    | Login user    |
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | /api/auth/register | Register user |
+| POST | /api/auth/login | Login user |
 
 ---
 
 # Tasks
 
-| Method | Endpoint              | Description |
-| ------ | --------------------- | ----------- |
-| GET    | /api/tasks            | Get tasks   |
-| POST   | /api/tasks            | Create task |
-| PATCH  | /api/tasks/:id        | Update task |
-| DELETE | /api/tasks/:id        | Delete task |
-| PATCH  | /api/tasks/:id/assign | Assign task |
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | /api/tasks | Get tasks |
+| POST | /api/tasks | Create task |
+| PATCH | /api/tasks/:id | Update task |
+| DELETE | /api/tasks/:id | Delete task |
+| PATCH | /api/tasks/:id/assign | Assign task |
 
 ---
 
 # Users
 
-| Method | Endpoint                        | Description             |
-| ------ | ------------------------------- | ----------------------- |
-| GET    | /api/users                      | Get all users           |
-| GET    | /api/users/team                 | Get team members        |
-| PATCH  | /api/users/:id/assign-team-lead | Assign employee to lead |
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | /api/users | Get all users |
+| GET | /api/users/team | Get team members |
+| PATCH | /api/users/:id/assign-team-lead | Assign employee to lead |
 
 ---
 
 # Socket.IO Events
 
-| Event       | Description                  |
-| ----------- | ---------------------------- |
+| Event | Description |
+|---|---|
 | taskCreated | Fired when a task is created |
 | taskUpdated | Fired when a task is updated |
 | taskDeleted | Fired when a task is deleted |
@@ -255,16 +253,16 @@ npm start
 
 # Future Improvements
 
-* Pagination
-* Search & Sorting
-* Activity Logs
-* Notifications
-* File Attachments
-* Docker Support
-* Unit Testing
-* Audit Trails
-* Rate Limiting
-* API Versioning
+- Pagination
+- Search & Sorting
+- Activity Logs
+- Notifications
+- File Attachments
+- Docker Support
+- Unit Testing
+- Audit Trails
+- Rate Limiting
+- API Versioning
 
 ---
 
@@ -284,6 +282,8 @@ MongoDB Atlas
 
 Vishal Singh
 
-* GitHub: [vishalsinghlab](https://github.com/vishalsinghlab?utm_source=chatgpt.com)
-* LinkedIn: [Vishal Singh LinkedIn](https://linkedin.com/in/vishal-singh-b57b7b109?utm_source=chatgpt.com)
-* Portfolio: [Portfolio Website](https://singhvishal.vercel.app?utm_source=chatgpt.com)
+- GitHub: https://github.com/vishalsinghlab
+- LinkedIn: https://linkedin.com/in/vishal-singh-b57b7b109
+- Portfolio: https://singhvishal.vercel.app
+
+---
